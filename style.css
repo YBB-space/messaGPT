@@ -1,0 +1,28 @@
+section{
+    height: 100vh;
+    background: url(https://github.com/YBB-space/YBB-space.github.io/blob/main/background_1_milkyway.PNG?raw=true);
+}
+body{
+    margin: 0;
+    height: 2000px;
+    background: black;
+}
+h1{
+    color:white;
+    font-size:6em;
+    position:absolute;
+    top:300px;
+    left:70px;
+}
+section:before{
+    content:"";
+    background:linear-gradient(to top,black,transparent);
+    position:absolute;
+    left:0;
+    height:100%;
+    width:100%;
+}
+b{
+    position:absolute;
+    left: 30px;;
+}
