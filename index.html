@@ -1,19 +1,30 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>윤보배의 웹사이트</title>
-    <link rel="stylesheet" href="style.css" type="text/css" />
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chat Application</title>
+    <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <section>
-        <h4>portfolio</h4>
-        <h5>© 2024 YBB_HANWOOL</matija></h5>
-        <h1> 윤보배를 소개합니다!</h1>
-    </section>
-    <div>
-        <p>PORTFOLIO</p>
-        <h3>-</h3>
-        <h3>상상 그 이상의 저를 보여드리겠습니다</h3>
+    <div class="chat-container">
+        <div class="chat">
+            <div class="chat-format">
+                <ul>
+                    <!-- Messages will be appended here -->
+                </ul>
+            </div>
+            <div class="chat-box">
+                <ul>
+                    <!-- User and AI messages will be appended here -->
+                </ul>
+            </div>
+        </div>
+        <div class="input-div">
+            <textarea placeholder="Type a message..."></textarea>
+        </div>
     </div>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="scripts.js"></script>
 </body>
 </html>
