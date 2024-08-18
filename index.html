@@ -7,23 +7,32 @@
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <div class="chat-container">
+    <div class="chat_wrap">
+        <div class="header">CHAT</div>
         <div class="chat">
-            <div class="chat-format">
-                <ul>
-                    <!-- Messages will be appended here -->
-                </ul>
-            </div>
-            <div class="chat-box">
-                <ul>
-                    <!-- User and AI messages will be appended here -->
-                </ul>
-            </div>
+            <ul>
+                <!-- 동적 생성된 메시지가 여기에 추가됩니다. -->
+            </ul>
         </div>
         <div class="input-div">
-            <textarea placeholder="Type a message..."></textarea>
+            <textarea placeholder="Press Enter to send message."></textarea>
+        </div>
+
+        <!-- 형식 정의 -->
+        <div class="chat format">
+            <ul>
+                <li>
+                    <div class="sender">
+                        <span></span>
+                    </div>
+                    <div class="message">
+                        <span></span>
+                    </div>
+                </li>
+            </ul>
         </div>
     </div>
+
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="scripts.js"></script>
 </body>
