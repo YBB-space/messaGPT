@@ -12,7 +12,7 @@
             font-weight: 100;
             font-style: normal;
         }
-
+        
         /* 기본 스타일 */
         body {
             margin: 0;
@@ -24,7 +24,7 @@
         }
 
         header {
-            background: #fff;
+            background: #ffffff;
             color: #333;
             padding: 20px 0;
             border-bottom: 1px solid #e1e1e1;
@@ -44,6 +44,7 @@
 
         .logo {
             font-size: 1.8em;
+            color: #007aff;
             font-weight: bold;
         }
 
@@ -65,7 +66,7 @@
         }
 
         .hero {
-            background: url('https://github.com/user-attachments/assets/704d253a-a8f8-4d00-b1ca-c9d9f857a570') no-repeat center center;
+            background: linear-gradient(to right, rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.5)), url('https://private-user-images.githubusercontent.com/118036855/358977989-704d253a-a8f8-4d00-b1ca-c9d9f857a570.gif?jwt=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJnaXRodWIuY29tIiwiYXVkIjoicmF3LmdpdGh1YnVzZXJjb250ZW50LmNvbSIsImtleSI6ImtleTUiLCJleHAiOjE3MjQwNDEyMjUsIm5iZiI6MTcyNDA0MDkyNSwicGF0aCI6Ii8xMTgwMzY4NTUvMzU4OTc3OTg5LTcwNGQyNTNhLWE4ZjgtNGQwMC1iMWNhLWM5ZDlmODU3YTU3MC5naWY_WC1BbXotQWxnb3JpdGhtPUFXUzQtSE1BQy1TSEEyNTYmWC1BbXotQ3JlZGVudGlhbD1BS0lBVkNPRFlMU0E1M1BRSzRaQSUyRjIwMjQwODE5JTJGdXMtZWFzdC0xJTJGczMlMkZhd3M0X3JlcXVlc3QmWC1BbXotRGF0ZT0yMDI0MDgxOVQwNDE1MjVaJlgtQW16LUV4cGlyZXM9MzAwJlgtQW16LVNpZ25hdHVyZT1jOGFmMzA2NWVhZGIxNjZiZGM0NDE0NjBhOTFiYmRiOGZlZDBlZjczM2ZjNDE4MThlMGI2Mjk0MjkwZmI5OGQ5JlgtQW16LVNpZ25lZEhlYWRlcnM9aG9zdCZhY3Rvcl9pZD0wJmtleV9pZD0wJnJlcG9faWQ9MCJ9.S6wCR4duPwfIUGJBES1lSXAljYpZdrKLvXxkpZ6e0OY') no-repeat center center;
             background-size: cover;
             height: 100vh;
             display: flex;
@@ -77,8 +78,9 @@
             opacity: 0;
             transform: translateY(20px);
             animation: fadeInUp 1s 0.5s forwards;
+            backdrop-filter: blur(5px);
+            box-shadow: inset 0 0 50px rgba(0, 0, 0, 0.7); /* 그라디언트와 그림자 효과 추가 */
         }
-
         .hero-content {
             max-width: 700px;
         }
@@ -100,16 +102,18 @@
             display: inline-block;
             padding: 15px 30px;
             font-size: 1.2em;
-            background-color: #007aff; /* 애플 블루 */
+            background-color: #007aff;
             color: #fff;
             text-decoration: none;
             border-radius: 25px;
-            transition: background-color 0.3s ease;
+            transition: background-color 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
             font-weight: 600;
+            border: 2px solid #007aff; /* 버튼 경계선 추가 */
         }
 
         .cta-button:hover {
-            background-color: #0051a2; /* 더 다크 블루 */
+            background-color: #0051a2;
+            transform: scale(1.05);
         }
 
         /* 기능 섹션 스타일 */
@@ -123,6 +127,7 @@
             opacity: 0;
             transform: translateY(20px);
             animation: fadeInUp 1s 1s forwards;
+            backdrop-filter: blur(5px);
         }
 
         .feature {
@@ -132,6 +137,17 @@
             opacity: 0;
             transform: translateY(20px);
             animation: fadeInUp 0.8s forwards;
+            background: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(15px);
+            border-radius: 15px;
+            padding: 20px;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* 기본 그림자 */
+        }
+
+        .feature:hover {
+            transform: translateY(-10px) scale(1.05); /* 입체 효과 */
+            box-shadow: 0 12px 24px rgba(0, 0, 0, 0.2); /* 호버 시 그림자 확대 */
         }
 
         .feature:nth-child(1) {
@@ -148,8 +164,9 @@
 
         .feature-icon {
             font-size: 3em;
-            color: #007aff; /* 애플 블루 */
+            color: #007aff;
             margin-bottom: 20px;
+            animation: bounce 2s infinite;
         }
 
         .feature h2 {
@@ -163,6 +180,7 @@
             color: #555;
             font-weight: 300;
         }
+
 
         /* 추가 내용 섹션 스타일 */
         .additional-content {
@@ -202,6 +220,7 @@
             opacity: 0;
             transform: translateY(20px);
             animation: fadeInUp 1s 2s forwards;
+            
         }
 
         .pricing-plan {
@@ -223,6 +242,8 @@
 
         .pricing-plan:hover {
             transform: scale(1.05);
+            transform: translateY(-10px) scale(1.05); /* 입체 효과 */
+            box-shadow: 0 12px 24px rgba(0, 0, 0, 0.2); /* 호버 시 그림자 확대 */
         }
 
         .pricing-plan:nth-child(1) {
@@ -355,14 +376,25 @@
 
         /* 푸터 스타일 */
         footer {
-            background: #f5f5f7;
-            color: #333;
+            background: #333;
+            color: #f1f1f1;
             text-align: center;
             padding: 20px 0;
-            border-top: 1px solid #e1e1e1;
-            opacity: 0;
-            transform: translateY(20px);
-            animation: fadeInUp 0.6s 4s forwards;
+            margin-top: 40px;
+        }
+
+        footer p {
+            font-size: 0.9em;
+        }
+
+        footer a {
+            color: #007aff;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        footer a:hover {
+            color: #0051a2;
         }
 
         .social-links {
@@ -376,38 +408,45 @@
             text-decoration: none;
         }
         
-        /* 애니메이션 */
-        @keyframes fadeInUp {
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
+        /* 애니메이션 효과 */
         @keyframes fadeInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
             to {
                 opacity: 1;
                 transform: translateY(0);
             }
         }
 
-        /* 반응형 디자인 */
-        @media (max-width: 768px) {
-            .nav-links {
-                flex-direction: column;
-                gap: 10px;
-                text-align: center;
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
             }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
 
-            .features, .pricing {
-                flex-direction: column;
-                align-items: center;
+        @keyframes bounce {
+            0%, 100% {
+                transform: translateY(0);
             }
+            50% {
+                transform: translateY(-10px);
+            }
+        }
 
-            .pricing-plan, .feature {
-                max-width: 90%;
+        @keyframes pulse {
+            0%, 100% {
+                transform: scale(1);
             }
-            
+            50% {
+                transform: scale(1.02);
+            }
         }
 
         /* 모달 스타일 */
@@ -453,11 +492,10 @@
         <nav>
             <div class="logo">messaGPT</div>
             <ul class="nav-links">
-                <li><a href="#hero">홈</a></li>
-                <li><a href="#features">기능</a></li>
-                <li><a href="#additional-content">추가 내용</a></li>
-                <li><a href="#pricing" class="open-modal" data-modal="donation-modal">기부</a></li>
-                <li><a href="#contact" class="open-modal" data-modal="email-modal">연락처</a></li>
+                <li><a href="#hero">HOME</a></li>
+                <li><a href="#additional-content">messaGPT란?</a></li>
+                <li><a href="#contact" class="open-modal" data-modal="email-modal">문의</a></li>
+                <li><a href="#pricing" class="open-modal" data-modal="donation-modal">지원하기</a></li>
             </ul>
         </nav>
     </header>
@@ -472,47 +510,41 @@
     </section>
 
     <!-- 기능 섹션 -->
-    <section id="features" class="features">
+    <section class="features">
         <div class="feature">
-            <div class="feature-icon">🔒</div>
-            <h2>개인 정보</h2>
-            <p>절대 개인정보를 수집하지 않습니다.</p>
+            <div class="feature-icon">💬</div>
+            <h2>실시간 대화 분석</h2>
+            <p>대화를 실시간으로 분석하여 맞춤형 피드백을 제공합니다.</p>
+        </div>
+        <div class="feature">
+            <div class="feature-icon">🔐</div>
+            <h2>안전한 대화 보장</h2>
+            <p>당신의 대화를 절대 수집하지 않습니다.</p>
         </div>
         <div class="feature">
             <div class="feature-icon">💵</div>
             <h2>무료 이용</h2>
-            <p>별도의 비용지불 없이 무료로 이용 가능합니다.</p>
-        </div>
-        <div class="feature">
-            <div class="feature-icon">💬</div>
-            <h2>자율성</h2>
-            <p>편지를 작성하고 자유롭게 대화하세요.</p>
+            <p>별도의 비용지불 없이 완전 무료로 이용 가능합니다.</p>
         </div>
     </section>
 
     <!-- 추가 내용 섹션 -->
     <section id="additional-content" class="additional-content">
-        <h2>messaGPT</h2>
-        <p>그리운 마음을 전하는 특별한 공간입니다. 소중한 이에게 마음을 담은 편지를 보내고, 그리움의 감동을 함께 나누세요.</p>
+        <div class="about-content">
+            <h2>🤔</h2>
+            <h2>messaGPT란 무엇인가요?</h2>
+            <p>messaGPT는 최신 AI 기술을 활용하여 여러분의 그리운 마음을 담은 편지를 보내고, 그리움의 감동을 함께 나누는 공간입니다.</p>
+            <div class="about-feature">
+            <h2>-</h2>
+            <h2>openAI의 최신모델을 무료로!</h2>
+            <p>openAI의 최신 AI모델 chatGPT-4o을 이용하여 보다 더 정확하고 자연스러운 대화가 가능합니다.</p>
     </section>
 
-    <!-- 가격 섹션 -->
-    <section id="pricing" class="pricing">
-        <div class="pricing-plan">
-            <h2>🙏</h2>
-            <h2>기부 하기</h2>
-            <p></p>
-            <ul>
-                <li>지원을 통해 프로젝트 발전에 기여해주세요!</li>
-            </ul>
-            <a href="#contact" class="cta-button open-modal" data-modal="donation-modal">기부하기</a>
-        </div>
-    </section>
 
     <!-- 기부자 명단 섹션 -->
     <section id="donor-list" class="donor-list">
         <h2>👫</h2>
-        <h2>기부자 명단</h2>
+        <h2>도움주신 분들</h2>
         <p>기부해주신 모든 분들께 감사드립니다.</p>
         <button class="cta-button open-modal" data-modal="donor-list-modal">명단 확인</button>
     </section>
@@ -521,12 +553,12 @@
     <div id="donor-list-modal" class="modal">
         <div class="modal-content">
             <span class="modal-close" data-modal="donor-list-modal">&times;</span>
-            <h2>🙇‍♂️ 기부자 명단</h2>
+            <h2>🙇‍♂️ 도움주신 분들</h2>
             <p>프로젝트 발전에 기여해주셔서 감사합니다!</p>
             <ul>
-                <li>홍길동</li>
-                <li>김철수</li>
-                <li>박영희</li>
+                <li>홍길동 - 100,000원</li>
+                <li>김철수 - 100,000원</li>
+                <li>박영희 - 100,000원</li>
                 <!-- 기부자 목록을 여기에 추가하세요 -->
             </ul>        </div>
     </div>
@@ -535,8 +567,8 @@
     <div id="donation-modal" class="modal">
         <div class="modal-content">
             <span class="modal-close" data-modal="donation-modal">&times;</span>
-            <h2>💳 기부 정보</h2>
-            <p>계좌 : 국민 79620101750435</p>
+            <h2>감사합니다!</h2>
+            <p>💳 국민 79620101750435</p>
             <p>매달 도움주신분 명단에 올라갑니다!</p>
         </div>
     </div>
@@ -561,12 +593,22 @@
         </form>
     </section>
 
-    <!-- 푸터 -->
-    <footer>
-        <p>&copy; 2024 HANWOOL. 모든 권리 보유.</p>
-        <div class="social-links">
-            <a href="#" aria-label="개발자 정보">👩‍💻</a>
+    <!-- 가격 섹션 -->
+    <section id="pricing" class="pricing">
+        <div class="pricing-plan">
+            <h2>🙏</h2>
+            <h2>지원 하기</h2>
+            <p></p>
+            <ul>
+                <li>지원을 통해 프로젝트 발전에 기여해주세요!</li>
+            </ul>
+            <a href="#contact" class="cta-button open-modal" data-modal="donation-modal">기부하기</a>
         </div>
+    </section>
+
+    <footer>
+        <p>&copy; 2024 messaGPT. 모든 권리 보유.</p>
+        <p><a href="#">개인정보 처리방침</a> | <a href="#">이용 약관</a></p>
     </footer>
 
     <!-- JavaScript -->
