@@ -1,0 +1,479 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>가상의 편지 대화</title>
+    <style>
+        html{
+            height: 100%;
+            background: linear-gradient(135deg, #ff9060, #92bdf8); /* 그라데이션 배경 */
+            animation: gradientAnimation 10s ease infinite;
+            background-size: 200% 200%;
+        }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            margin: 0;
+            margin: 0;
+            padding: 24px;
+            height: 80%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            animation: fadeIn 1s ease-in;
+        }
+
+        @keyframes gradientAnimation {
+            0% {
+                background-position: 0% 0%;
+            }
+            50% {
+                background-position: 100% 100%;
+            }
+            100% {
+                background-position: 0% 0%;
+            }
+        }
+
+        .container {
+            max-width: 100%;
+            width: 100%;
+            min-height: 80vh;
+            background: #ffffff;
+            border-radius: 15px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            padding: 20px;
+            animation: slideUp 0.5s ease-out;
+            box-sizing: border-box;
+        }
+
+        #landing-page, #input-section, #chat-section {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            width: 100%;
+            text-align: center;
+        }
+
+        h1 {
+            font-size: 2rem;
+            margin-bottom: 20px;
+        }
+
+        p {
+            font-size: 1.2rem;
+            margin-bottom: 30px;
+            color: #333;
+        }
+
+        .input-label {
+            font-weight: 600;
+            margin-bottom: 10px;
+            color: #333;
+            font-size: 1rem;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .input-label .emoji {
+            font-size: 1.5rem;
+        }
+
+        .input-label .text {
+            font-size: 1rem;
+            text-align: center;
+        }
+
+        .input-label[data-step="1"] .emoji { content: '🧐'; }
+        .input-label[data-step="2"] .emoji { content: '🔎'; }
+        .input-label[data-step="3"] .emoji { content: '😊'; }
+        .input-label[data-step="4"] .emoji { content: '🔎'; }
+        .input-label[data-step="5"] .emoji { content: '✉️'; }
+
+        input, textarea {
+            width: 100%;
+            max-width: 100%;
+            padding: 12px;
+            margin: 10px 0;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            font-size: 1rem;
+            box-shadow: inset 0 1px 3px rgba(0,0,0,0.1);
+            transition: box-shadow 0.3s ease;
+            box-sizing: border-box;
+        }
+
+        input:focus, textarea:focus {
+            outline: none;
+            border-color: #007aff;
+            box-shadow: 0 0 5px rgba(0,122,255,0.5);
+        }
+
+        textarea {
+            height: 120px;
+            resize: none;
+        }
+
+        .input-group {
+            width: 100%;
+            max-width: 500px;
+            margin: 10px 0;
+        }
+
+        .input-group + .input-group {
+            margin-top: 20px;
+        }
+
+        .chat-input-container {
+            display: flex;
+            flex-direction: row;
+            width: 100%;
+            max-width: 500px;
+            margin: 10px 0;
+            gap: 10px;
+        }
+
+        .chat-input-container input {
+            flex: 1;
+        }
+
+        button {
+            padding: 8px 16px;
+            background-color: #007aff;
+            color: white;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            font-size: 1rem;
+            transition: background-color 0.3s, transform 0.2s;
+        }
+
+        button:hover {
+            background-color: #0051a8;
+            transform: scale(1.05);
+        }
+
+        .next-button-container {
+            display: flex;
+            justify-content: center;
+            width: 100%;
+            margin-top: 10px;
+        }
+
+        #chat-log {
+            border: none;
+            padding: 10px;
+            height: 600px;
+            overflow-y: auto;
+            margin-bottom: 10px;
+            background-color: #f1f1f3;
+            border-radius: 12px;
+            box-shadow: inset 0 1px 3px rgba(0,0,0,0.1);
+            transition: background-color 0.3s;
+            position: relative;
+        }
+
+        .message {
+            margin: 10px 0;
+            padding: 10px 15px;
+            border-radius: 20px;
+            max-width: 80%;
+            font-size: 0.9rem;
+            opacity: 0;
+            animation: fadeInMessage 0.5s ease-in forwards;
+            display: flex;
+            flex-direction: column;
+            position: relative;
+            text-align: left; /* 텍스트 왼쪽 정렬 */
+        }
+
+        .message .timestamp {
+            font-size: 0.75rem;
+            color: #888;
+            margin-top: 5px;
+        }
+
+        .user-message {
+            background-color: #007aff;
+            color: white;
+            align-self: flex-end;
+            border-radius: 20px 20px 0 20px;
+        }
+
+        .recipient-message {
+            background-color: #e5e5ea;
+            color: black;
+            align-self: flex-start;
+            border-radius: 20px 20px 20px 0;
+        }
+
+        .chat-container {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .blurred {
+            filter: blur(5px);
+            pointer-events: none;
+        }
+
+        .error-message {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: rgba(255, 0, 0, 0.8);
+            color: white;
+            padding: 20px;
+            border-radius: 8px;
+            text-align: center;
+            z-index: 10;
+            display: none;
+            font-size: 1.5rem;
+            animation: fadeIn 0.5s ease-in;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        @keyframes slideUp {
+            from { transform: translateY(20px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+
+        @keyframes fadeInMessage {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        @media (max-width: 600px) {
+            .input-label {
+                font-size: 0.9rem;
+            }
+
+            input, textarea {
+                font-size: 0.9rem;
+                padding: 10px;
+            }
+
+            button {
+                padding: 6px 12px;
+                font-size: 0.9rem;
+            }
+
+            #chat-log {
+                height: 300px;
+            }
+        }
+
+        .step-container {
+            width: 100%;
+            max-width: 500px;
+            margin: 20px 0;
+            text-align: left;
+        }
+
+    </style>
+</head>
+<body>
+    <div id="landing-page" class="container">
+        <h1>가상의 편지 대화 애플리케이션</h1>
+        <p>이 애플리케이션은 편지를 주고받으며 대화 시뮬레이션을 제공합니다.</p>
+        <button id="startButton">시작하기</button>
+    </div>
+
+    <div id="main-content" class="container" style="display: none;">
+        <div id="input-section">
+            <div id="step1" class="step-container">
+                <div class="input-label" data-step="1">
+                    <div class="emoji" style="font-size: 50px;">🧐</div>
+                    <div class="text">당신의 이름은 무엇인가요?</div>
+                </div>
+                <input type="text" id="userName" required>
+                <div class="next-button-container">
+                    <button id="nextButton">다음</button>
+                </div>
+            </div>
+
+            <div id="step2" class="step-container" style="display: none;">
+                <div class="input-label" data-step="2">
+                    <div class="emoji" style="font-size: 50px;">🔎</div>
+                    <div class="text">당신의 역할은 무엇인가요?</div>
+                </div>
+                <input type="text" id="userRole" required>
+                <div class="next-button-container">
+                    <button id="nextButton2">다음</button>
+                </div>
+            </div>
+
+            <div id="step3" class="step-container" style="display: none;">
+                <div class="input-label" data-step="3">
+                    <div class="emoji" style="font-size: 50px;">😊</div>
+                    <div class="text">편지를 받는 이의 이름은 무엇인가요?</div>
+                </div>
+                <input type="text" id="recipientName" required>
+                <div class="next-button-container">
+                    <button id="nextButton3">다음</button>
+                </div>
+            </div>
+
+            <div id="step4" class="step-container" style="display: none;">
+                <div class="input-label" data-step="4">
+                    <div class="emoji" style="font-size: 50px;">🔎</div>
+                    <div class="text">편지를 받는 이는 누구 인가요?</div>
+                </div>
+                <input type="text" id="recipientRole" required>
+                <div class="next-button-container">
+                    <button id="nextButton4">다음</button>
+                </div>
+            </div>
+
+            <div id="step5" class="step-container" style="display: none;">
+                <div class="input-label" data-step="5">
+                    <div class="emoji" style="font-size: 50px;">✉️</div>
+                    <div class="text">편지 내용을 입력해 주세요:</div>
+                </div>
+                <textarea id="letterContent" required></textarea>
+                <div class="next-button-container">
+                    <button id="confirmButton">확인</button> 
+                </div>
+            </div>
+        </div>
+
+        <div id="chat-section" style="display: none;">
+            <div id="chat-log" class="chat-container"></div>
+            <div class="chat-input-container">
+                <input type="text" id="chatInput" placeholder="메시지를 입력하세요..." />
+                <button id="sendButton">전송</button>
+            </div>
+        </div>
+        <div class="error-message" id="errorMessage">
+            <span class="emoji">😥</span>
+            <div>오류가 발생했습니다. 다시 시도해 주세요.</div>
+        </div>
+    </div>
+
+    <script>
+        let messages = [];
+        let currentStep = 1;
+
+        // 랜딩 페이지 시작하기 버튼 클릭 이벤트
+        document.getElementById('startButton').addEventListener('click', function() {
+            document.getElementById('landing-page').style.display = 'none';
+            document.getElementById('main-content').style.display = 'flex';
+        });
+
+        function showStep(step) {
+            document.querySelectorAll('#input-section > .step-container').forEach(div => {
+                div.style.display = 'none';
+            });
+            document.getElementById(`step${step}`).style.display = 'block';
+        }
+
+        document.getElementById('nextButton').addEventListener('click', function() {
+            currentStep++;
+            showStep(currentStep);
+        });
+
+        document.getElementById('nextButton2').addEventListener('click', function() {
+            currentStep++;
+            showStep(currentStep);
+        });
+
+        document.getElementById('nextButton3').addEventListener('click', function() {
+            currentStep++;
+            showStep(currentStep);
+        });
+
+        document.getElementById('nextButton4').addEventListener('click', function() {
+            currentStep++;
+            showStep(currentStep);
+        });
+
+        document.getElementById('confirmButton').addEventListener('click', async function() {
+            const letterContent = document.getElementById('letterContent').value;
+            if (letterContent) {
+                document.getElementById('input-section').style.display = 'none';
+                document.getElementById('chat-section').style.display = 'block';
+
+                messages.push({ role: "system", content: `1. 너는 가상의 편지 대상자(${document.getElementById('recipientRole').value}) 즉 편지를 받는 이야. 2. 사용자가 보낸 편지를 읽고 편지에 맞추어서 대화를 이어 나가. 3. 처음 인사는 안부를 물어보거나 반가움을 표시하는 등 '간단하고 짧게' 인사해.` });
+                messages.push({ role: "user", content: `보내는 이: ${document.getElementById('userName').value}(${document.getElementById('userRole').value}), 받는 이: ${document.getElementById('recipientName').value}, 편지 내용: ${letterContent}` });
+
+                const response = await callOpenAI(messages);
+                const chatLog = document.getElementById('chat-log');
+                chatLog.innerHTML += `<div class="message recipient-message"><strong>${document.getElementById('recipientName').value}:</strong> ${response}<div class="timestamp">${new Date().toLocaleTimeString()}</div></div>`;
+                messages.push({ role: "assistant", content: response });
+                chatLog.scrollTop = chatLog.scrollHeight;
+            }
+        });
+
+        document.getElementById('sendButton').addEventListener('click', async function() {
+            const chatInput = document.getElementById('chatInput').value;
+            if (chatInput) {
+                const chatLog = document.getElementById('chat-log');
+                chatLog.innerHTML += `<div class="message user-message"><strong>Me:</strong> ${chatInput}<div class="timestamp">${new Date().toLocaleTimeString()}</div></div>`;
+                document.getElementById('chatInput').value = '';
+
+                messages.push({ role: "user", content: chatInput });
+
+                const response = await callOpenAI(messages);
+                if (response.includes('오류')) {
+                    showError();
+                } else {
+                    chatLog.innerHTML += `<div class="message recipient-message"><strong>${document.getElementById('recipientName').value}:</strong> ${response}<div class="timestamp">${new Date().toLocaleTimeString()}</div></div>`;
+                    messages.push({ role: "assistant", content: response });
+                    chatLog.scrollTop = chatLog.scrollHeight;
+                }
+            }
+        });
+
+        async function callOpenAI(messages) {
+            const apiKey = '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';
+
+            try {
+                const response = await fetch('https://api.openai.com/v1/chat/completions', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${apiKey}`
+                    },
+                    body: JSON.stringify({
+                        model: 'gpt-4o',
+                        messages: [
+                            ...messages,
+                            { 
+                                role: "user", 
+                                content: "이 편지에 대한 답장을 작성해 주세요." 
+                            }
+                        ],
+                        temperature: 0.7,
+                        max_tokens: 100
+                    })
+                });
+
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+
+                const data = await response.json();
+                return data.choices[0].message.content;
+            } catch (error) {
+                console.error('Error fetching data from OpenAI:', error);
+                return '오류가 발생했습니다.';
+            }
+        }
+
+        function showError() {
+            const chatLog = document.getElementById('chat-log');
+            chatLog.classList.add('blurred');
+            const errorMessage = document.getElementById('errorMessage');
+            errorMessage.style.display = 'block';
+        }
+    </script>
+</body>
+</html>
